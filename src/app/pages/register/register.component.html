@@ -1,0 +1,83 @@
+<div class="min-h-screen flex items-center justify-center bg-slate-950 px-4">
+  <div
+    class="w-full max-w-md rounded-2xl border border-white/10 bg-slate-900/70 p-6 shadow-xl backdrop-blur"
+  >
+    <div class="mb-6">
+      <h1 class="text-2xl font-semibold text-white">Criar conta</h1>
+      <p class="mt-1 text-sm text-slate-300">Crie sua conta para continuar</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4" novalidate>
+      <div class="space-y-1">
+        <label class="text-sm text-slate-200">Nome</label>
+        <input
+          type="text"
+          formControlName="name"
+          class="h-11 w-full rounded-xl border border-white/10 bg-white/5 px-3 text-white outline-none focus:border-indigo-400/70 focus:ring-2 focus:ring-indigo-500/20"
+        />
+
+        @if (name.touched && name.errors?.['required']) {
+          <p class="text-xs text-rose-300">Nome é obrigatório.</p>
+        }
+      </div>
+
+      <div class="space-y-1">
+        <label class="text-sm text-slate-200">E-mail</label>
+        <input
+          type="email"
+          formControlName="email"
+          class="h-11 w-full rounded-xl border border-white/10 bg-white/5 px-3 text-white outline-none focus:border-indigo-400/70 focus:ring-2 focus:ring-indigo-500/20"
+        />
+
+        @if (email.touched && email.errors?.['required']) {
+          <p class="text-xs text-rose-300">E-mail é obrigatório.</p>
+        }
+
+        @if (email.touched && email.errors?.['email']) {
+          <p class="text-xs text-rose-300">E-mail inválido.</p>
+        }
+      </div>
+
+      <div class="space-y-1">
+        <label class="text-sm text-slate-200">Senha</label>
+        <input
+          type="password"
+          formControlName="password"
+          class="h-11 w-full rounded-xl border border-white/10 bg-white/5 px-3 text-white outline-none focus:border-indigo-400/70 focus:ring-2 focus:ring-indigo-500/20"
+        />
+
+        @if (password.touched && password.errors?.['required']) {
+          <p class="text-xs text-rose-300">Senha é obrigatória.</p>
+        }
+
+        @if (password.touched && password.errors?.['minlength']) {
+          <p class="text-xs text-rose-300">Mínimo 6 caracteres.</p>
+        }
+      </div>
+
+      @if (errorMsg()) {
+        <div
+          class="rounded-xl border border-rose-400/30 bg-rose-500/10 px-3 py-2 text-sm text-rose-200"
+        >
+          {{ errorMsg() }}
+        </div>
+      }
+
+      <button
+        type="submit"
+        [disabled]="loading()"
+        class="h-11 w-full rounded-xl bg-indigo-500 font-semibold text-white transition hover:bg-indigo-400 disabled:opacity-70"
+      >
+        @if (loading()) {
+          <span>Criando...</span>
+        } @else {
+          <span>Criar conta</span>
+        }
+      </button>
+
+      <div class="text-sm text-center pt-2">
+        <a routerLink="/" class="text-indigo-300 hover:text-indigo-200"> Já tenho conta </a>
+      </div>
+    </form>
+  </div>
+</div>

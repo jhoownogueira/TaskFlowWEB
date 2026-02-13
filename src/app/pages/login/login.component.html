@@ -58,7 +58,6 @@
         [disabled]="loading()"
         class="h-11 w-full rounded-xl bg-indigo-500 font-semibold text-white transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-70"
       >
-      
         @if (loading()) {
           <span>Entrando...</span>
         } @else {
@@ -67,9 +66,6 @@
       </button>
 
       <div class="flex items-center justify-between pt-1 text-sm">
-        <a routerLink="/forgot-password" class="text-slate-300 hover:text-white">
-          Esqueci minha senha
-        </a>
         <a routerLink="/register" class="text-indigo-300 hover:text-indigo-200"> Criar conta </a>
       </div>
     </form>

@@ -30,4 +30,8 @@ export class AuthService {
   refresh(refreshToken: string): Observable<RefreshResponse> {
     return this.http.post<RefreshResponse>(`${this.apiUrl}/auth/refresh`, { refreshToken });
   }
+
+  register(payload: { email: string; password: string }): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/register`, payload);
+  }
 }
