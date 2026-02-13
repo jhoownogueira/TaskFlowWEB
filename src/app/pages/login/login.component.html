@@ -1,0 +1,77 @@
+<div class="min-h-screen flex items-center justify-center bg-slate-950 px-4">
+  <div
+    class="w-full max-w-md rounded-2xl border border-white/10 bg-slate-900/70 p-6 shadow-xl backdrop-blur"
+  >
+    <div class="mb-6">
+      <h1 class="text-2xl font-semibold text-white">Entrar</h1>
+      <p class="mt-1 text-sm text-slate-300">Acesse sua conta pra continuar</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4" novalidate>
+      <div class="space-y-1">
+        <label for="email" class="text-sm text-slate-200">E-mail</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="seuemail@dominio.com"
+          class="h-11 w-full rounded-xl border border-white/10 bg-white/5 px-3 text-white placeholder:text-slate-400 outline-none focus:border-indigo-400/70 focus:ring-2 focus:ring-indigo-500/20"
+        />
+
+        @if (email.touched && email.errors?.['required']) {
+          <p class="text-xs text-rose-300">E-mail é obrigatório.</p>
+        }
+
+        @if (email.touched && email.errors?.['email']) {
+          <p class="text-xs text-rose-300">E-mail inválido.</p>
+        }
+      </div>
+
+      <div class="space-y-1">
+        <label for="password" class="text-sm text-slate-200">Senha</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="••••••••"
+          class="h-11 w-full rounded-xl border border-white/10 bg-white/5 px-3 text-white placeholder:text-slate-400 outline-none focus:border-indigo-400/70 focus:ring-2 focus:ring-indigo-500/20"
+        />
+
+        @if (password.touched && password.errors?.['required']) {
+          <p class="text-xs text-rose-300">Senha é obrigatória.</p>
+        }
+        @if (password.touched && password.errors?.['minlength']) {
+          <p class="text-xs text-rose-300">Senha precisa ter no mínimo 6 caracteres.</p>
+        }
+      </div>
+
+      @if (errorMsg()) {
+        <div
+          class="rounded-xl border border-rose-400/30 bg-rose-500/10 px-3 py-2 text-sm text-rose-200"
+        >
+          {{ errorMsg() }}
+        </div>
+      }
+
+      <button
+        type="submit"
+        [disabled]="loading()"
+        class="h-11 w-full rounded-xl bg-indigo-500 font-semibold text-white transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-70"
+      >
+      
+        @if (loading()) {
+          <span>Entrando...</span>
+        } @else {
+          <span>Entrar</span>
+        }
+      </button>
+
+      <div class="flex items-center justify-between pt-1 text-sm">
+        <a routerLink="/forgot-password" class="text-slate-300 hover:text-white">
+          Esqueci minha senha
+        </a>
+        <a routerLink="/register" class="text-indigo-300 hover:text-indigo-200"> Criar conta </a>
+      </div>
+    </form>
+  </div>
+</div>

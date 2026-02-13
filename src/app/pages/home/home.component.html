@@ -1,0 +1,70 @@
+<div class="min-h-screen bg-slate-950 text-white px-4 py-6">
+  <div class="mx-auto max-w-2xl space-y-4">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-2xl font-semibold">Tasks</h1>
+        <p class="text-sm text-slate-300">Seu painel de tarefas</p>
+      </div>
+
+      <button class="rounded-xl bg-white/10 px-4 py-2 text-sm hover:bg-white/15" (click)="logout()">
+        Sair
+      </button>
+    </div>
+
+    @if (errorMsg()) {
+      <div
+        class="rounded-xl border border-rose-400/30 bg-rose-500/10 px-3 py-2 text-sm text-rose-200"
+      >
+        {{ errorMsg() }}
+      </div>
+    }
+
+    <div class="rounded-2xl border border-white/10 bg-slate-900/70 p-4">
+      <div class="flex gap-2">
+        <input
+          class="h-11 w-full rounded-xl border border-white/10 bg-white/5 px-3 text-white outline-none focus:border-indigo-400/70 focus:ring-2 focus:ring-indigo-500/20"
+          placeholder="Nova tarefa..."
+          [value]="newTitle()"
+          (input)="newTitle.set($any($event.target).value)"
+          (keydown.enter)="add()"
+        />
+        <button
+          class="h-11 rounded-xl bg-indigo-500 px-4 font-semibold hover:bg-indigo-400 disabled:opacity-70"
+          [disabled]="loading()"
+          (click)="add()"
+        >
+          Adicionar
+        </button>
+      </div>
+
+      <div class="mt-4">
+        @if (loading()) {
+          <p class="text-sm text-slate-300">Carregando...</p>
+        } @else {
+          @if (tasks() && tasks()!.items.length === 0) {
+            <p class="text-sm text-slate-300">Sem tarefas por enquanto.</p>
+          } @else {
+            <ul class="space-y-2">
+              @for (t of tasks()!.items; track t.id) {
+                <li
+                  class="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-3 py-2"
+                >
+                  <div class="flex items-center gap-3">
+                    <input type="checkbox" [checked]="t.status === 'DONE'" (change)="toggle(t)" />
+                    <span [class.line-through]="t.status === 'DONE'" class="text-sm">
+                      {{ t.title }}
+                    </span>
+                  </div>
+
+                  <button class="text-sm text-rose-200 hover:text-rose-100" (click)="remove(t)">
+                    Remover
+                  </button>
+                </li>
+              }
+            </ul>
+          }
+        }
+      </div>
+    </div>
+  </div>
+</div>
